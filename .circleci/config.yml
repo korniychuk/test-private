@@ -1,0 +1,15 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+
+      - run:
+          name: Setup VirtualEnv
+          command: |
+            bash config/ci/deploy.sh prod docker-build
+
+      - run: bash config/ci/deploy.sh prod docker-push
+      - run: bash config/ci/deploy.sh prod deploy
